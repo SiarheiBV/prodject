@@ -1,0 +1,9 @@
+a = int(input())
+b = int(input())
+summ = a + b
+raz = a - b
+pr = a * b
+ss = a ** b
+dp = a % b
+cd = a // b
+print(summ, raz, pr, ss, dp, cd, sep='\n')
