@@ -9,4 +9,3 @@ for i in range(len(any_str)):
         even += any_str[i]
 print("Enter string:", any_str, end="\n\n\n")
 print(even, odd, sep="     ", end="\n!!!")
-

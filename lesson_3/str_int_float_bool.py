@@ -13,10 +13,10 @@ st = 'строка'
 print(len(st))  # длина строки
 
 s = 'hello'
-print(s[0:5:1],s[::1],s[0:5:2],s[::2])
+print(s[0:5:1], s[::1], s[0:5:2], s[::2])
 
 
-a = random.randint(100,999)
+a = random.randint(100, 999)
 print(a)
 a = str(a)
 b = int(a[0])
@@ -27,7 +27,7 @@ print(e)
 
 s = '1313'
 print(s[::3])
-print(s[0],s[-1])
+print(s[0], s[-1])
 print(s.upper())
 print(s[::-1])
 print(s.isdigit())
@@ -45,7 +45,8 @@ h = a ** b
 v = a // b
 
 int_ = 674
-rint_ = 674//10 # нахождение последней цифры числа (в больших числах лучше применять циклы)
+# нахождение последней цифры числа (в больших числах лучше применять циклы)
+rint_ = 674//10
 
 print(c)
 print(d)
@@ -63,4 +64,3 @@ print(number == number_2)
 my_name = "Sergei"
 your_name = "Vacya"
 print(my_name == your_name)
-

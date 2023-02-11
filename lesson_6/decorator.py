@@ -14,4 +14,3 @@ def write(name, surname, age):
 
 
 write("Siarhei", "Baradauka", 27)
-

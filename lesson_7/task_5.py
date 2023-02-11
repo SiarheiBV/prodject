@@ -1,6 +1,6 @@
 def func(n: str) -> str:
     if n.isdigit():
-        if isinstance(n, float) == True:
+        if isinstance(n, float) is True:
             if float(n) < 0:
                 return f"Вы ввели отрицательное дробное число: {n}"
             else:
