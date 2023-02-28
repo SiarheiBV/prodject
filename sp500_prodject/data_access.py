@@ -1,5 +1,6 @@
 import csv
 from string import ascii_letters
+import heapq
 
 
 class CorrectNewCompany(Exception):
@@ -9,6 +10,13 @@ class CorrectNewCompany(Exception):
 def get_all_records():
     with open("/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv", "r") as f_csv:
         return list(csv.DictReader(f_csv))
+
+
+def get_top_10_companies() -> None:
+    top = heapq.nlargest(10, get_all_records(), key=lambda row: float(row["Price"]))
+    top_10_company = [(row["Name"], float(row["Price"])) for row in top]
+
+    return top_10_company
 
 
 def valid_new_company(new_symbol, new_company, u_sector, u_price):

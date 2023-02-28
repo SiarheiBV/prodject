@@ -1,11 +1,8 @@
-import heapq
 from data_access import get_all_records
 import pandas as pd
 from faker import Faker
 from random import uniform
 from time import time
-
-csv_list = get_all_records()
 
 
 def time_cash(del_time=5):
@@ -30,7 +27,7 @@ def time_cash(del_time=5):
 def find_info_by_name(company_name: str) -> list:
     list_comp = []
 
-    for row in csv_list:
+    for row in get_all_records():
         name = row["Name"].lower()
 
         if company_name in name:
@@ -47,7 +44,7 @@ def find_info_by_name(company_name: str) -> list:
 def find_info_by_symbol(symbol: str) -> list:
     list_symbol = []
 
-    for row in csv_list:
+    for row in get_all_records():
         item_symbol = row["Symbol"].lower()
 
         if symbol in item_symbol:
@@ -64,7 +61,7 @@ def find_info_by_symbol(symbol: str) -> list:
 def get_all_companies_by_sector(sector: str) -> list:
     list_name = []
 
-    for row in csv_list:
+    for row in get_all_records():
         sector_list = row["Sector"].lower()
 
         if sector in sector_list:
@@ -73,29 +70,20 @@ def get_all_companies_by_sector(sector: str) -> list:
 
 
 def calculate_average_price() -> None:
-    price = [float(row["Price"]) for row in csv_list]
+    price = [float(row["Price"]) for row in get_all_records()]
     price_int = round(sum(price) / len(price), 2)
 
     return price_int
 
 
-def get_top_10_companies() -> None:
-    top = heapq.nlargest(10, csv_list, key=lambda row: float(row["Price"]))
-    top_10_company = [(row["Name"], float(row["Price"])) for row in top]
-
-    return top_10_company
-
-
 def add_new_company(new_symbol, new_company, u_sector, u_price):
 
-    date = pd.read_csv(
-        '/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv')
+    date = pd.read_csv('/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv')
     new_row = pd.Series(
         {'Symbol': new_symbol, 'Name': new_company, 'Sector': u_sector, 'Price': u_price})
     date = date.append(new_row, ignore_index=True)
     date = date.fillna("None")
-    date.to_csv(
-        '/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv', index=False)
+    date.to_csv('/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv', index=False)
 
     return "Your company in list"
 
@@ -105,29 +93,24 @@ def update_company_name(symbol, company_name):
         '/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv')
     comparison = date_file['Symbol'].str.lower() == symbol.lower()
     date_file.loc[comparison, 'Name'] = company_name
-    date_file.to_csv(
-        '/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv', index=False)
+    date_file.to_csv('/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv', index=False)
 
     return f"Company name with {symbol} symbol updated to {company_name}"
 
 
 def delete_company(symbol):
-    date = pd.read_csv(
-        '/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv')
+    date = pd.read_csv('/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv')
     date = date.drop(
         date[date["Symbol"].str.lower() == symbol].index)
-    date.to_csv(
-        '/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv', index=False)
+    date.to_csv('/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv', index=False)
 
     return "Removal completed successfully"
 
 
 def truncate_all():
-    date = pd.read_csv(
-        '/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv')
+    date = pd.read_csv('/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv')
     date = date.drop(date.index, inplace=True)
-    date.to_csv(
-        '/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv', index=False)
+    date.to_csv('/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv', index=False)
 
     return "Data clearing completed successfully"
 
@@ -135,8 +118,7 @@ def truncate_all():
 def populate_file_with_random_data(number):
     fake = Faker()
     number = int(number)
-    data = pd.read_csv(
-        '/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv')
+    data = pd.read_csv('/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv')
     data.drop(data.index, inplace=True)
 
     for i in range(0, number):
@@ -148,6 +130,5 @@ def populate_file_with_random_data(number):
                            'Sector': sector, 'Price': price, }, ignore_index=True)
         data = data.fillna("None")
 
-    data.to_csv(
-        '/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv', index=False)
+    data.to_csv('/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv', index=False)
     return data

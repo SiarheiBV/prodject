@@ -2,7 +2,6 @@ from business_logic import (find_info_by_name,
                             find_info_by_symbol,
                             get_all_companies_by_sector,
                             calculate_average_price,
-                            get_top_10_companies,
                             add_new_company,
                             update_company_name,
                             delete_company,
@@ -13,6 +12,7 @@ from data_access import (valid_new_company,
                          CorrectNewCompany,
                          valid_new_name,
                          valid_del_company,
+                         get_top_10_companies
                          )
 from validators import validate_user_choice
 from errors import IncorrectUserInputError
