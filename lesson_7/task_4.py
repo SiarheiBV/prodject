@@ -1,5 +1,4 @@
-from datetime import datetime
-from time import sleep, time
+from time import time
 
 
 def decorator(func):
@@ -7,7 +6,8 @@ def decorator(func):
         start = time()
         func(*args)
         end = time()
-        print("\n", f"function execution time: {round(end - start, 10)} second")
+        print(
+            "\n", f"function execution time: {round(end - start, 10)} second")
 
     return wrapper
 

@@ -5,7 +5,7 @@ str_2 = input()
 str_3 = input()
 str_4 = input()
 
-with open('text.txt', 'w') as f_file:  # метод with автоматически закрывает файл и не надо писать f.close
+with open('text.txt', 'w') as f_file:
     f_file.write(str_1 + '\n')
     f_file.write(str_2 + '\n')
 

@@ -1,6 +1,6 @@
 """ list """
 
-listt = [1,2,3,4,4]
+listt = [1, 2, 3, 4, 4]
 listt.append(5)
 listt.pop(1)
 print(listt.count(4))

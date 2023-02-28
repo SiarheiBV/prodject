@@ -13,14 +13,8 @@ test = """def fib(n):
         a, b = b, a + b"""
 
 
-
-print(f'Время вычесления чисел Фибоначчи заняло: {timeit.timeit(stmt=test)} сек')
-"""не хватило времени разобраться как правильно проверять время работы функции, разберусь с этим на выходных"""
-
-
-
-
-""" task Fibonachchi metode two"""
+print(
+    f'Время вычесления чисел Фибоначчи заняло: {timeit.timeit(stmt=test)} сек')
 
 
 def fib(n):
@@ -35,6 +29,3 @@ start = time.perf_counter()
 result = fib(10)
 end_ = time.perf_counter()
 print(f"Вычисление заняло {end_ - start:0.9f} секунд",)
-
-
-
