@@ -1,7 +1,9 @@
 import csv
 import heapq
 
+
 cache_db = {}
+
 
 with open("/home/siarhei/Disk/PY35/prodject/lesson_9/sp500.csv") as f_csv:
     cvs_file = csv.DictReader(f_csv)
@@ -20,15 +22,23 @@ def cash(func):
 
 
 @cash
-def find_info_by_name(name_lookup: str) -> list:
+
+def find_info_by_name(company_name: str) -> list:
+
 
     list_comp = []
 
     for row in csv_list:
         name = row["Name"].lower()
 
-        if name_lookup in name:
-            list_comp.append(row)
+
+        if company_name in name:
+            list_comp.append({
+                "Symbol": row.get("Symbol"),
+                "Name": row.get("Name"),
+                "Sector": row.get("Sector"),
+                "Stock price": row.get("Stock price")
+            })
     return list_comp
 
 
@@ -77,13 +87,14 @@ def get_top_10_companies() -> None:
 
 
 def main() -> None:
-    print("""Choose t action from menu:
-    1 - Find info by name
-    2 - Find info by symbol
-    3 - Get all companies by sector
-    4 - Calculate average price
-    5 - Get top 10 companies
-    6 - Exit""")
+
+    print("Choose the action from menu:",
+          "1 - Find info by name",
+          "2 - Find info by symbol",
+          "3 - Get all companies by sector",
+          "4 - Calculate average price",
+          "5 - Get top 10 companies",
+          "6 - Exit")
 
     while True:
         choice = input("Your choice: ")
@@ -105,8 +116,9 @@ def main() -> None:
                     print(symbol_list)
 
                 elif choice == 3:
-                    sector_name = input("enter sector name: ").lower()
-                    s_comp_name = get_all_companies_by_sector(sector_name)
+
+                    sector = input("enter sector name: ").lower()
+                    s_comp_name = get_all_companies_by_sector(sector)
                     print(s_comp_name)
 
                 elif choice == 4:
