@@ -1,7 +1,7 @@
 import csv
 import heapq
 
-cash_db = {}
+cache_db = {}
 
 with open("/home/siarhei/Disk/PY35/prodject/lesson_9/sp500.csv") as f_csv:
     cvs_file = csv.DictReader(f_csv)
@@ -10,11 +10,11 @@ with open("/home/siarhei/Disk/PY35/prodject/lesson_9/sp500.csv") as f_csv:
 
 def cash(func):
     def wrapper(*args, **kwargs):
-        if args in cash_db:
-            return cash_db[args]
+        if args in cache_db:
+            return cache_db[args]
         else:
             result = func(*args, **kwargs)
-            cash_db[args] = result
+            cache_db[args] = result
             return result
     return wrapper
 
