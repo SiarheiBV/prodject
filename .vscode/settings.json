@@ -1,0 +1,12 @@
+{
+    "workbench.editor.showTabs": true,
+    "workbench.editor.highlightModifiedTabs": false,
+    "workbench.editor.wrapTabs": true,
+    "workbench.editor.enablePreviewFromCodeNavigation": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.editor.enablePreview": false,
+    "editor.defaultFormatter": "ms-python.python",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    }
+}

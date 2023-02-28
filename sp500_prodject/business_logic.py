@@ -7,15 +7,15 @@ from time import time
 
 def time_cash(del_time=5):
 
-    cash_db = {}
+    cache_db = {}
 
     def cash(func):
         def wrapper(*args, **kwargs):
-            if args in cash_db and time() - cash_db[args][1] < del_time:
-                return cash_db[args][0]
+            if args in cache_db and time() - cache_db[args][1] < del_time:
+                return cache_db[args][0]
             else:
                 result = func(*args, **kwargs)
-                cash_db[args] = (result, time())
+                cache_db[args] = (result, time())
                 return result
 
         return wrapper
