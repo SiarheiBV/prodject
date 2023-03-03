@@ -69,11 +69,17 @@ class LinkedList:
         return self.length
 
     def __iter__(self):
-        current = self.head
-        while current:
-            yield current
-            current = current.next
-        return None
+        self.current = self.head
+        return self
+
+    def __next__(self):
+
+        if self.current is None:
+            raise StopIteration
+        else:
+            buf = self.current
+            self.current = self.current.next
+        return buf
 
 
 link = LinkedList()
@@ -82,10 +88,10 @@ link.append(2)
 link.append(3)
 link.append(4)
 
-print(link.println())
-link.reverse()
-print(link.println())
-print(link.__len__())
+# print(link.println())
+# link.reverse()
+# print(link.println())
+# print(link.__len__())
 for i in link:
     print(i)
 print()
