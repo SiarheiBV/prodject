@@ -26,6 +26,9 @@ class Contact:
         if value[0] != "+":
             raise ValueError("number must start from +")
 
+        if not value[1:].isdigit():
+            raise ValueError("number incorrect")
+
         if value[1:4] not in ("375", "374") and value[1:3] != "48":
             raise ValueError("code must be start from 375 or 374 or 48")
 
