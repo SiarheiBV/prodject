@@ -30,6 +30,6 @@ fake_1 = FakeFactory(PhoneProvider, 5)
 fake_2 = FakeFactory(NameProvider, 3)
 fake_3 = FakeFactory(BankCardProvider, 2)
 fake_4 = FakeFactory(EmailProvider, 7)
-print(fake_1.generate())
-for email in fake_4:
+print(fake_2.generate())
+for email in fake_2:
     print(email)

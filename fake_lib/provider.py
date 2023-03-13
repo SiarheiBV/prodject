@@ -24,7 +24,8 @@ class BankCardProvider:
 
 
 class NameProvider:
+    first_names = ["David", "Angus", "Mike", "John", "Chris", "Billy", "Chuck", "Jimi", "John", "Kirk"]
+    last_names = ["Bowie", "Lennon", "Johnson", "Lee", "Brown", "Young", "Gibbons", "Berry", "Hendrix", "Lennon", "Hammett"]
+
     def generate(self):
-        first_names = ["David", "Angus", "Mike", "John", "Chris", "Billy", "Chuck", "Jimi", "John", "Kirk"]
-        last_names = ["Bowie", "Lennon", "Johnson", "Lee", "Brown", "Young", "Gibbons", "Berry", "Hendrix", "Lennon", "Hammett"]
-        return f'{random.choice(first_names)} {random.choice(last_names)}'
+        return f'{random.choice(self.first_names)} {random.choice(self.last_names)}'
