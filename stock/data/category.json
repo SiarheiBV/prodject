@@ -1,0 +1,24 @@
+{
+    "PHONE": [
+        "Id",
+        "Model",
+        "Color",
+        "Memory",
+        "Screensize",
+        "Price"
+    ],
+    "TELEVISION": [
+        "Id",
+        "Model",
+        "Color",
+        "Screensize",
+        "Price"
+    ],
+    "HEADPHONES": [
+        "Id",
+        "Model",
+        "Color",
+        "Bt-Version",
+        "Price"
+    ]
+}

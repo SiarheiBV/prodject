@@ -1,0 +1,109 @@
+{
+    "ORDERS": [
+        {
+            "id": 1,
+            "items": [
+                {
+                    "id": "1",
+                    "category": "PHONE",
+                    "name": "iphone 8",
+                    "current_cost": 5000,
+                    "quantity": 10
+                },
+                {
+                    "id": "2",
+                    "category": "PHONE",
+                    "name": "iphone 13 pro",
+                    "current_cost": 26000,
+                    "quantity": 20
+                },
+                {
+                    "id": "3",
+                    "category": "TELEVISION",
+                    "name": "samsung",
+                    "current_cost": 45000,
+                    "quantity": 15
+                },
+                {
+                    "id": "5",
+                    "category": "HEADPHONES",
+                    "name": "huawei",
+                    "current_cost": 2500,
+                    "quantity": 50
+                }
+            ],
+            "total_cost": 78500,
+            "created_at": "23.03.2023"
+        },
+        {
+            "id": 2,
+            "items": [
+                {
+                    "id": "1",
+                    "category": "PHONE",
+                    "name": "iphone 8",
+                    "current_cost": 500,
+                    "quantity": 1
+                }
+            ],
+            "total_cost": 500,
+            "created_at": "23.03.2023"
+        },
+        {
+            "id": 3,
+            "items": [
+                {
+                    "id": "1",
+                    "category": "PHONE",
+                    "name": "iphone 8",
+                    "current_cost": 500,
+                    "quantity": 1
+                }
+            ],
+            "total_cost": 500,
+            "created_at": "23.03.2023"
+        },
+        {
+            "id": 4,
+            "items": [
+                {
+                    "id": "3",
+                    "category": "TELEVISION",
+                    "name": "samsung",
+                    "current_cost": 12000,
+                    "quantity": 4
+                }
+            ],
+            "total_cost": 12000,
+            "created_at": "23.03.2023"
+        },
+        {
+            "id": 5,
+            "items": [
+                {
+                    "id": "4",
+                    "category": "TELEVISION",
+                    "name": "hp",
+                    "current_cost": 6000,
+                    "quantity": "4"
+                }
+            ],
+            "total_cost": 6000,
+            "created_at": "23.03.2023"
+        },
+        {
+            "id": 6,
+            "items": [
+                {
+                    "id": "4",
+                    "category": "TELEVISION",
+                    "name": "hp",
+                    "current_cost": 4500,
+                    "quantity": "3"
+                }
+            ],
+            "total_cost": 4500,
+            "created_at": "23.03.2023"
+        }
+    ]
+}

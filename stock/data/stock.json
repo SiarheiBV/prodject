@@ -1,0 +1,61 @@
+{
+    "GOODS": [
+        {
+            "Id": "1",
+            "Model": "iphone 8",
+            "Color": "white",
+            "Memory": "126",
+            "Screensize": "5.5",
+            "Price": "500",
+            "category": "PHONE",
+            "quantity": 98,
+            "created_at": "23.03.2023",
+            "updated_at": "23.03.2023"
+        },
+        {
+            "Id": "2",
+            "Model": "iphone 13 pro",
+            "Color": "space gray",
+            "Memory": "512",
+            "Screensize": "6.06",
+            "Price": "1300",
+            "category": "PHONE",
+            "quantity": 34,
+            "created_at": "23.03.2023",
+            "updated_at": "23.03.2023"
+        },
+        {
+            "Id": "3",
+            "Model": "samsung",
+            "Color": "blac",
+            "Screensize": "52.5",
+            "Price": "3000",
+            "category": "TELEVISION",
+            "quantity": 23,
+            "created_at": "23.03.2023",
+            "updated_at": "23.03.2023"
+        },
+        {
+            "Id": "4",
+            "Model": "hp",
+            "Color": "black",
+            "Screensize": "35",
+            "Price": "1500",
+            "category": "TELEVISION",
+            "quantity": 0,
+            "created_at": "23.03.2023",
+            "updated_at": "23.03.2023"
+        },
+        {
+            "Id": "5",
+            "Model": "huawei",
+            "Color": "white",
+            "Bt-Version": "5.0",
+            "Price": "50",
+            "category": "HEADPHONES",
+            "quantity": 35,
+            "created_at": "23.03.2023",
+            "updated_at": "23.03.2023"
+        }
+    ]
+}
