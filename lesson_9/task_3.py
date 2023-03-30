@@ -1,4 +1,4 @@
-def distance(*points):
+def distance(*points: tuple[int, ...]) -> float:
     dist = 0
     for i in range(len(points) - 1):
         x1, y1 = points[i]

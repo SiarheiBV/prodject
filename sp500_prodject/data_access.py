@@ -1,17 +1,18 @@
 import csv
 from string import ascii_letters
+from typing import Any
 
 
 class CorrectNewCompany(Exception):
     ...
 
 
-def get_all_records():
+def get_all_records() -> list[dict[str, Any]]:
     with open("/home/siarhei/Disk/PY35/prodject/sp500_prodject/sp500.csv", "r") as f_csv:
         return list(csv.DictReader(f_csv))
 
 
-def valid_new_company(new_symbol, new_company, u_sector, u_price):
+def valid_new_company(new_symbol: str, new_company: str, u_sector: str, u_price: str) -> None:
     if new_symbol.isdigit():
         raise CorrectNewCompany("symbol must be letters")
 
@@ -48,7 +49,7 @@ def valid_new_company(new_symbol, new_company, u_sector, u_price):
         raise CorrectNewCompany("price not float")
 
 
-def valid_new_name(symbol, company_name):
+def valid_new_name(symbol: str, company_name: str) -> None:
     flag = False
     for row in get_all_records():
         if symbol.lower() == row["Symbol"].lower():
@@ -60,7 +61,7 @@ def valid_new_name(symbol, company_name):
             raise CorrectNewCompany("company name is not unique")
 
 
-def valid_del_company(symbol):
+def valid_del_company(symbol: str) -> None:
 
     flag = False
     for row in get_all_records():

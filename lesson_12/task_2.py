@@ -3,14 +3,14 @@ class EmptyLibraryError(Exception):
 
 
 class Book:
-    def __init__(self, name, description, pages, author, price):
+    def __init__(self, name, description, pages, author, price) -> None:
         self.name = name
         self.description = description
         self.pages = pages
         self.author = author
         self.price = price
 
-    def to_dict(self):
+    def to_dict(self) -> dict[str, str | int]:
         return {
             "name": self.name,
             "description": self.description,
@@ -19,47 +19,47 @@ class Book:
             "price": self.price
         }
 
-    def contains_word(self, word):
+    def contains_word(self, word) -> bool:
         if word in self.name.lower() or word in self.description.lower():
             return True
         return False
 
-    def __lt__(self, other):
+    def __lt__(self, other) -> bool:
         return self.page < other.page
 
-    def __gt__(self, other):
+    def __gt__(self, other) -> bool:
         return self.page > other.page
 
-    def __le__(self, other):
+    def __le__(self, other) -> bool:
         return self.page <= other.page
 
-    def __ge__(self, other):
+    def __ge__(self, other) -> bool:
         return self.page >= other.page
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return self.to_dict() == other.to_dict()
 
 
 class Library:
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.book = []
 
-    def add_book(self, book):
+    def add_book(self, book: str) -> None:
         self.book.append(book)
 
-    def get_books(self):
+    def get_books(self) -> list:
         return [book.to_dict() for book in self.book]
 
-    def remove_book(self, book):
+    def remove_book(self, book) -> None:
         self.book.remove(book)
 
-    def find_the_biggest_book(self):
+    def find_the_biggest_book(self) -> dict[str, str | int]:
         if not self.book:
             raise EmptyLibraryError("this book is not on the list")
         return max(self.book, key=lambda book: book.pages).to_dict()
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.book)
 
 

@@ -1,5 +1,10 @@
 import csv
 import heapq
+from typing import Callable, TypeVar, ParamSpec
+
+RT = TypeVar('RT')
+P = ParamSpec('P')
+
 
 cash_db = {}
 
@@ -8,8 +13,8 @@ with open("/home/siarhei/Disk/PY35/prodject/lesson_9/sp500.csv") as f_csv:
     csv_list = list(cvs_file)
 
 
-def cash(func):
-    def wrapper(*args, **kwargs):
+def cash(func: Callable[P, RT]) -> Callable[P, RT]:
+    def wrapper(*args: P.args, **kwargs: P.kwargs) -> RT:
         if args in cash_db:
             return cash_db[args]
         else:
@@ -59,7 +64,7 @@ def get_all_companies_by_sector(sector: str) -> list:
 
 
 @cash
-def calculate_average_price() -> None:
+def calculate_average_price() -> int:
 
     price = [float(row["Price"]) for row in csv_list]
     price_int = round(sum(price) / len(price), 2)
@@ -68,7 +73,7 @@ def calculate_average_price() -> None:
 
 
 @cash
-def get_top_10_companies() -> None:
+def get_top_10_companies() -> list:
 
     top = heapq.nlargest(10, csv_list, key=lambda row: float(row["Price"]))
     top_10_company = [(row["Name"], float(row["Price"])) for row in top]

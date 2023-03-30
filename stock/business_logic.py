@@ -1,9 +1,12 @@
 from datetime import datetime
 from openpyxl import Workbook, load_workbook
 import os
+from typing import TYPE_CHECKING, Any, Optional
+if TYPE_CHECKING:
+    from interfaces import StorageProto
 
 
-def create_category(category: str, parameters: list, connector):
+def create_category(category: str, parameters: list, connector: 'StorageProto' | Any) -> Optional[str]:
     try:
         data = connector.read_file()
     except FileNotFoundError:
@@ -12,15 +15,16 @@ def create_category(category: str, parameters: list, connector):
     if category not in data:
         data[category] = parameters
         connector.write_file(data)
-        print("Category added")
+        return "Category added"
     else:
         raise NameError("Category already exists")
 
 
-def add_product(category: str, quantity: int, connector_db, cat_json):
+def add_product(category: str, quantity: int, cat_json: 'StorageProto', connector_db: 'StorageProto') -> Any:
     cat_list = cat_json.read_file()
+
     try:
-        data = connector_db.read_file()
+        data:  dict[str, list[dict[str, Any]]] = connector_db.read_file()
     except FileNotFoundError:
         data = {}
 
@@ -53,7 +57,7 @@ def add_product(category: str, quantity: int, connector_db, cat_json):
         print("New product added.")
 
 
-def get_all(category, min_date=None, max_date=None, connector_db=None):
+def get_all(category: str, connector_db: 'StorageProto', min_date: Optional[str] = None, max_date: Optional[str] = None) -> str | list:
     data = connector_db.read_file()
     result = []
 
@@ -64,12 +68,12 @@ def get_all(category, min_date=None, max_date=None, connector_db=None):
                 if (not min_date or create_date_obj >= datetime.strptime(min_date, "%d.%m.%Y")) and (not max_date or create_date_obj <= datetime.strptime(max_date, "%d.%m.%Y")):
                     result.append({"category": item["category"], "id": item["Id"], "model": item["Model"], "price": item["Price"]})
     if result:
-        print(*result)
+        return result
     else:
-        print("No matching products found.")
+        return "No matching products found."
 
 
-def get_product(pr_code, connector_db):
+def get_product(pr_code: str, connector_db: 'StorageProto') -> None:
     data = connector_db.read_file()
 
     flag = True
@@ -78,7 +82,7 @@ def get_product(pr_code, connector_db):
             if item["Id"] == pr_code:
                 flag = True
                 if int(item["quantity"]) > 0:
-                    print(f"You can buy {item['Model']}. Quantity: {item['quantity']}")
+                    print("You can buy {item['Model']}. Quantity: {item['quantity']}")
                     break
                 else:
                     print("Product is out of stock")
@@ -89,7 +93,7 @@ def get_product(pr_code, connector_db):
         print("product code is not defined")
 
 
-def place_an_order(basket, connector_db, orders_file):
+def place_an_order(basket: dict, connector_db: 'StorageProto', orders_file: 'StorageProto' | Any) -> str:
     data = connector_db.read_file()
 
     shopping_list = []
@@ -106,11 +110,10 @@ def place_an_order(basket, connector_db, orders_file):
                     total_cost += current_cost
                     shopping_list.append({"id": item['Id'], "category": item['category'], "name": item['Model'], "current_cost": current_cost, "quantity": quantity})
                 else:
-                    print(f"Not enough products with code {code}")
+                    return f"Not enough products with code {code}"
         if not flag:
-            print(f"Product with code {code} is not defined in the store")
+            return f"Product with code {code} is not defined in the store"
     connector_db.write_file(data)
-    print("Your purchases:", *shopping_list, "total cost:", total_cost)
 
     try:
         orders = orders_file.read_file()
@@ -129,8 +132,10 @@ def place_an_order(basket, connector_db, orders_file):
     orders.setdefault("ORDERS", []).append(order)
     orders_file.write_file(orders)
 
+    return f"Your purchases:, {shopping_list}, total cost:, {total_cost}"
 
-def get_status(min_date=None, max_date=None, connector_db=None):
+
+def get_status(connector_db: 'StorageProto', min_date: Optional[str] = None, max_date: Optional[str] = None) -> str:
     data = connector_db.read_file()
     result = []
 
@@ -249,13 +254,5 @@ def get_status(min_date=None, max_date=None, connector_db=None):
         worksheet.cell(row=row, column=4, value=metrics['popular_product'])
 
     workbook.save(file_path)
-    print(f"data successfully saved to file {file_path}")
-    # try:
-    #     workbook.save(file_path)
-    #     print(f"Данные успешно сохранены в файл {file_path}")
-    # except Exception as e:
-    #     print(f"Ошибка сохранения файла")
 
-
-"""г) На четвёртом листе должны выводиться метрики: общая выручка за выбранный период, общее количество товаров, самая популярная категория,
-самый популярный товар."""
+    return f"data successfully saved to file {file_path}"

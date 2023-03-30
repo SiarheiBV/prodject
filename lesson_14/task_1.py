@@ -1,5 +1,11 @@
+from typing import TypeAlias
+
+
+SelfExammple: TypeAlias = 'Alphabet'
+
+
 class Alphabet:
-    def __init__(self, end_: str, lower_=True):
+    def __init__(self, end_: str, lower_=True) -> None:
         self.start = ord("a")
         self.end_ = end_
         self.lower_ = lower_
@@ -8,7 +14,7 @@ class Alphabet:
             self.start = ord("A")
             self.end_ = self.end_.upper()
 
-    def __next__(self):
+    def __next__(self) -> None:
         if self.value == ord(self.end_):
             raise StopIteration
 
@@ -17,10 +23,10 @@ class Alphabet:
 
         return chr(self.value)
 
-    def __iter__(self):
+    def __iter__(self) -> SelfExammple:
         self.value = self.start - 1
         return self
 
 
 for letter in Alphabet(end_="r", lower_=False):
-    print(letter)
+    print(letter, end=" ")

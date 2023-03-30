@@ -1,35 +1,41 @@
+from typing import TypeAlias
+
+
+SelfExammple: TypeAlias = 'LinkedList'
+
+
 class IncorrectUserInputError(Exception):
     ...
 
 
 class Element:
-    def __init__(self, data: int):
+    def __init__(self, data: int) -> None:
         if not 0 <= data <= 10000:
             raise IncorrectUserInputError(f"Number must be in range 0-10000, you input {data}")
         self.data = data
         self.next = None
 
-    def __str__(self):
+    def __str__(self) -> str:
         # return f"[{self.data}]" # для построчного вывода по одному элементу через цикл for
         return f"[{self.data}] -> {self.next}"    # для красивого вывода всех элементов через метод println без
         # использования цикла и доп переменной для сохранения данных
 
-    def __lt__(self, other):
+    def __lt__(self, other) -> bool:
         return self.data < other.data
 
-    def __le__(self, other):
+    def __le__(self, other) -> bool:
         return self.data < other.data
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return self.data < other.data
 
 
 class LinkedList:
-    def __init__(self):
+    def __init__(self) -> None:
         self.head = None
         self.length = 0
 
-    def append(self, element):
+    def append(self, element: str) -> None:
         new_element = Element(element)
         current = self.head
         if not self.head:
@@ -41,7 +47,7 @@ class LinkedList:
         current.next = new_element
         self.length += 1
 
-    def reverse(self):
+    def reverse(self) -> None:
         current = self.head
         previous = None
         while current:
@@ -53,7 +59,7 @@ class LinkedList:
 
     # 1 вариант. вывода списка через этот метод: [1] -> [2] -> [3] -> [4] -> None
 
-    def println(self):
+    def println(self) -> str:
         return self.head
 
     # 2 вариант. цикл + доп. переменная для сохранения данных.
@@ -65,14 +71,14 @@ class LinkedList:
     #         current = current.next
     #     return lst
 
-    def __len__(self):
+    def __len__(self) -> bool:
         return self.length
 
-    def __iter__(self):
+    def __iter__(self) -> SelfExammple:
         self.current = self.head
         return self
 
-    def __next__(self):
+    def __next__(self) -> str:
 
         if self.current is None:
             raise StopIteration

@@ -3,13 +3,13 @@ import re
 
 
 class Censored:
-    def __set_name__(self, owner, name):
+    def __set_name__(self, owner: str, name: str) -> None:
         self.name = "_" + name
 
-    def __get__(self, instance, owner):
+    def __get__(self, instance: object, owner: type) -> str:
         return getattr(instance, self.name)
 
-    def __set__(self, instance, value):
+    def __set__(self, instance: object, value: str) -> None:
         new_value = re.sub(r'\b[fF][uU][cC][kK]\b', '****', value)
         setattr(instance, self.name, new_value)
 
@@ -17,11 +17,11 @@ class Censored:
 class Message:
     text = Censored()
 
-    def __init__(self, text):
+    def __init__(self, text: str) -> None:
         self.text = text
         self.__created_at = time()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.text}"
 
 
@@ -29,12 +29,12 @@ class Song:
     name = Censored()
     author = Censored()
 
-    def __init__(self, name, author):
+    def __init__(self, name: str, author: str) -> None:
         self.name = name
         self.author = author
         self.__created_at = time()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.author}: {self.name}"
 
 

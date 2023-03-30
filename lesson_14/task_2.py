@@ -1,27 +1,27 @@
 class Stack:
-    def __init__(self):
+    def __init__(self) -> None:
         self.stack = []
 
-    def push(self, element):
+    def push(self, element) -> None:
         self.stack.append(element)
 
-    def pop(self):
+    def pop(self) -> str | None:
         if not self.is_empty():
             return self.stack.pop()
         else:
             return None
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         return len(self.stack) == 0
 
-    def peek(self):
+    def peek(self) -> str | None:
         if not self.is_empty():
             return self.stack[-1]
         else:
             return None
 
 
-def correct_bracket_sequence(string):
+def correct_bracket_sequence(string: str) -> bool:
     stack = Stack()
     for br in string:
         if br in "([{":

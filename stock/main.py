@@ -34,20 +34,23 @@ def main() -> None:
         if choice == "1":
             category = input("Enter category: ").upper().strip()
             parametrs = input("Enter parameters: ").title().strip().split(" ")
-            create_category(category, parametrs, provide_db(TYPE_JSON, CATEGORY_LIST))
+            create = create_category(category, parametrs, provide_db(TYPE_JSON, CATEGORY_LIST))
+            print(create)
 
         if choice == "2":
             category = input("Enter category: ").upper().strip()
             quantity = input("Enter quantity product: ")
             if not quantity.isdigit():
                 raise IncorrectUserInputError("quantity must be integer.")
-            add_product(category, quantity, provide_db(TYPE_JSON, DB_STOCK), provide_db(TYPE_JSON, CATEGORY_LIST))
+            addproduct = add_product(category, quantity, provide_db(TYPE_JSON, CATEGORY_LIST), provide_db(TYPE_JSON, DB_STOCK))
+            print(addproduct)
 
         if choice == "3":
             category = input("Enter category: ").upper().strip()
             min_date = input("Enter date from: ").strip()
             max_date = input("Enter date before: ").strip()
-            get_all(category, min_date, max_date, provide_db(TYPE_JSON, DB_STOCK))
+            getall = get_all(category, provide_db(TYPE_JSON, DB_STOCK), min_date, max_date)
+            print(getall)
 
         if choice == "4":
             pr_code = input("Enter product code (id): ").strip()
@@ -77,12 +80,14 @@ def main() -> None:
                     basket[code_pr] = input("enter quantity product: ")
                     if not basket[code_pr].isdigit():
                         raise IncorrectUserInputError("quantity must be integer.")
-            place_an_order(basket, provide_db(TYPE_JSON, DB_STOCK), provide_db(TYPE_JSON, ORDER_LIST))
+            place = place_an_order(basket, provide_db(TYPE_JSON, DB_STOCK), provide_db(TYPE_JSON, ORDER_LIST))
+            print(place)
 
         if choice == "6":
             min_date = input("Enter date from: ").strip()
             max_date = input("Enter date before: ").strip()
-            get_status(min_date, max_date, provide_db(TYPE_JSON, ORDER_LIST))
+            status = get_status(provide_db(TYPE_JSON, ORDER_LIST), min_date, max_date)
+            print(status)
 
         elif choice == "0":
             print("Exit")
