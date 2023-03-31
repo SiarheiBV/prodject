@@ -1,3 +1,4 @@
+from typing import TypeAlias
 from provider import (NameProvider,
                       BankCardProvider,
                       PhoneProvider,
@@ -5,20 +6,23 @@ from provider import (NameProvider,
                       )
 
 
+CL: TypeAlias = NameProvider | BankCardProvider | PhoneProvider | EmailProvider
+
+
 class FakeFactory:
-    def __init__(self, provider, count):
+    def __init__(self, provider: CL, count: int) -> None:
         if count <= 0:
             raise ValueError('Count must be greater than zero')
-        self.provider = provider()
+        self.provider = provider
         self.count = count
 
-    def generate(self):
+    def generate(self) -> str:
         return self.provider.generate()
 
-    def __iter__(self):
+    def __iter__(self) -> 'FakeFactory':
         return self
 
-    def __next__(self):
+    def __next__(self) -> str:
         if self.count == 0:
             raise StopIteration
         self.count -= 1
@@ -26,10 +30,9 @@ class FakeFactory:
 
 
 # Example usage
-fake_1 = FakeFactory(PhoneProvider, 5)
-fake_2 = FakeFactory(NameProvider, 3)
-fake_3 = FakeFactory(BankCardProvider, 2)
-fake_4 = FakeFactory(EmailProvider, 7)
-print(fake_2.generate())
-for email in fake_2:
+fake_1 = FakeFactory(PhoneProvider(), 5)
+fake_2 = FakeFactory(NameProvider(), 3)
+fake_3 = FakeFactory(BankCardProvider(), 2)
+fake_4 = FakeFactory(EmailProvider(), 7)
+for email in fake_4:
     print(email)
