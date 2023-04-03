@@ -1,21 +1,27 @@
 from faker import Faker
 from datetime import datetime
-# import csv
 from validators import validate_user_choice
 from errors import IncorrectUserInputError
+from business_logic import (add_new_password,
+                            get_identifier,
+                            get_password,
+                            del_password,
+                            get_all_records
+                            )
+from providers import provide_db
+from config import TYPE_JSON, PLIST
 
 try:
     found_flag = open("data/flag.txt")
-    print("флаг найден")
 except FileNotFoundError:
-    # первый запуск
+    # пер+вый запуск
     creat_flag = open("data/flag.txt", "w")
 
     def gen_word():
         fake = Faker()
-        secret_word = fake.word()
-        print("remember the word:", secret_word)
-        return secret_word
+        passphrase = fake.word()
+        print("remember the word:", passphrase)
+        return passphrase
     word = gen_word()
     creat_flag.write(f"{word} - {datetime.now().strftime('%d.%m.%Y %H:%M')}")
     print("work programm")
@@ -45,19 +51,28 @@ def main() -> None:
             break
 
         if choice == "1":
-            pass
+            identifier = input("Enter password identifier: ").lower().strip()
+            password = input("Enter password: ").lower().strip()
+            # passphrase = input("Enter passphrase: ").lower().strip()
+            print(add_new_password(identifier, password, provide_db(TYPE_JSON, PLIST)))
 
         if choice == "2":
-            pass
+            get_identifier(provide_db(TYPE_JSON, PLIST))
 
         if choice == "3":
-            pass
+            identifier = input("Enter password identifier: ").lower().strip()
+            print(get_password(identifier, provide_db(TYPE_JSON, PLIST)))
 
         if choice == "4":
-            pass
+            identifier = input("Enter password identifier: ").lower().strip()
+            passphrase = input("Enter passphrase: ").lower().strip()
+            del_password(identifier, passphrase, provide_db(TYPE_JSON, PLIST))
 
         if choice == "5":
-            pass
+            passphrase = input("Enter passphrase: ").lower().strip()
+            extension = input("Enter csv, txt, xlsx: ").lower().strip()
+            get_all_records(passphrase, extension, provide_db(TYPE_JSON, PLIST))
 
 
-main()
+if __name__ == "__main__":
+    main()
