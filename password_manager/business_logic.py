@@ -3,9 +3,10 @@ from serialize_lib import (Serializer,
                            ExcelProvider,
                            TXTProvider
                            )
+from typing import Any
 
 
-def add_new_password(identifier, password, connector):
+def add_new_password(identifier: str, password: str, connector: Any, encode: Any) -> str:
 
     try:
         data = connector.read_file()
@@ -13,25 +14,25 @@ def add_new_password(identifier, password, connector):
         data = {"passphrase": input("enter passphrase: ")}
 
     if identifier not in data:
-        data[identifier] = password
+        data[identifier] = encode.encryption(password)
         connector.write_file(data)
         return "Password added"
     else:
         choice = input("identifier already exists, update password? y/n: ")
         if choice == "y":
-            data[identifier] = password
+            data[identifier] = encode.encryption(password)
             connector.write_file(data)
             return "Password update"
-        return
+        return "repeat input"
 
 
-def get_identifier(connector):
+def get_identifier(connector: Any) -> None:
     data = connector.read_file()
     for identifier in data.keys():
         print(identifier)
 
 
-def get_password(identifier, connector):
+def get_password(identifier: str, connector: Any, encode: Any) -> str:
     data = connector.read_file()
 
     if identifier not in data:
@@ -39,12 +40,12 @@ def get_password(identifier, connector):
     else:
         passphrase = input("Enter passphrase: ")
         if passphrase == data["passphrase"]:
-            print(data[identifier])
+            return encode.decoding(data[identifier])
         else:
-            print("invalid input")
+            return "invalid input"
 
 
-def del_password(identifier, passphrase, connector):
+def del_password(identifier: str, passphrase: str, connector: Any) -> str:
     data = connector.read_file()
 
     if identifier not in data:
@@ -53,27 +54,28 @@ def del_password(identifier, passphrase, connector):
         if passphrase == data["passphrase"]:
             del data[identifier]
             connector.write_file(data)
-            print("delete")
+            return "delete"
         else:
-            print("invalid input")
+            return "invalid input"
 
 
-def get_all_records(passphrase, extension, connector):
+def get_all_records(passphrase: str, extension: str, connector: Any, encode: Any) -> str:
     data = connector.read_file()
 
     if data["passphrase"] != passphrase:
-        print("invalid input")
+        return "invalid input"
     else:
         del data["passphrase"]
+        data_decode = {}
+        for key, value in data.items():
+            data_decode[key] = encode.decoding(value)
         if extension == "txt":
             serialize = Serializer(TXTProvider("data/password.txt"))
-            serialize.execute(data)
+            serialize.execute(data_decode)
         if extension == "csv":
             serialize = Serializer(CSVProvider("data/password.csv"))
-            serialize.execute(data)
+            serialize.execute(data_decode)
         if extension == "xlsx":
             serialize = Serializer(ExcelProvider("data/password.xlsx"))
-            serialize.execute(data)
-
-    """5. Экспортировать все пароли - запрашиваем кодовую фразу и название файла (доступные форматы excel, csv, txt, xml) и если она подходит и файл с нужным расширением,
-то записываем в этот файл все пароли в расшифрованном виде их идентификаторы."""
+            serialize.execute(data_decode)
+        return "File already"
