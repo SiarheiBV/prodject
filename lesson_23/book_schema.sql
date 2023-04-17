@@ -1,0 +1,145 @@
+CREATE TABLE Users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    surname TEXT NOT NULL,
+    user_name TEXT UNIQUE NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    age INTEGER NOT NULL,   
+    password TEXT NOT NULL,
+    phone TEXT UNIQUE,
+    created_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Roles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE NOT NULL,
+    created_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Permissions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE NOT NULL,
+    created_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Users_Roles (
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    role_id INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(id),
+    FOREIGN KEY (role_id) REFERENCES Roles(id)
+);
+CREATE TABLE Roles_Permissions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role_id INTEGER,
+    permission_id INTEGER,FOREIGN KEY (role_id) REFERENCES Roles(id),
+    FOREIGN KEY (permission_id) REFERENCES Permissions(id)
+);
+CREATE TABLE Books (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    price REAL NOT NULL,
+    description TEXT NOT NULL,
+    pages INTEGER NOT NULL,
+    format TEXT NOT NULL,
+    age_restriction INTEGER,
+    available INTEGER DEFAULT 0,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Authors (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    surname TEXT NOT NULL,
+    birth_date TEXT NOT NULL,
+    death_date TEXT,
+    information TEXT,
+    created_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Genres (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    description TEXT,
+    created_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Books_Authors (
+    id INTEGER PRIMARY KEY,
+    author_id INTEGER NOT NULL,
+    book_id INTEGER NOT NULL,
+    FOREIGN KEY (author_id) REFERENCES Authors(id),
+    FOREIGN KEY (book_id) REFERENCES Books(id)
+);
+CREATE TABLE Books_Genres (
+    id INTEGER PRIMARY KEY,
+    genres_id INTEGER NOT NULL,
+    book_id INTEGER NOT NULL,
+    FOREIGN KEY (genres_id) REFERENCES Genres(id),
+    FOREIGN KEY (book_id) REFERENCES Books(id)
+);
+CREATE TABLE Baskets (
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    created_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    status TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+CREATE TABLE Baskets_Books (
+    id INTEGER PRIMARY KEY,
+    basket_id INTEGER,
+    book_id INTEGER,
+    FOREIGN KEY (basket_id) REFERENCES Baskets(id),
+    FOREIGN KEY (book_id) REFERENCES Books(id)
+);
+CREATE TABLE Transactions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    basket_id INTEGER NOT NULL,
+    bank_card_id INTEGER NOT NULL,
+    amount INTEGER NOT NULL,
+    address_id INTEGER NOT NULL,
+    created_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (basket_id) REFERENCES Baskets(id),
+    FOREIGN KEY (bank_card_id) REFERENCES BankCards(id),
+    FOREIGN KEY (address_id) REFERENCES Addresses(id)
+);
+CREATE TABLE BankCards (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    card_number TEXT NOT NULL,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    cvc_code INTEGER NOT NULL,
+    expiration_month_year TEXT NOT NULL,
+    user_id INTEGER NOT NULL,
+    created_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+CREATE TABLE Addresses (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    city_id INTEGER NOT NULL,
+    street TEXT NOT NULL,
+    house_number TEXT NOT NULL,
+    postal_code TEXT NOT NULL,
+    user_id INTEGER,
+    created_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (city_id) REFERENCES Cities(id),
+    FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+CREATE TABLE Countries (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    created_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Cities (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    country_id INTEGER NOT NULL,
+    created_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NUMERIC DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (country_id) REFERENCES Countries(id)
+);
